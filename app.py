@@ -13,7 +13,7 @@ def artist_search():
     data for the app.
     """
     if request.method == 'POST':
-        url = f"https://www.theaudiodb.com/api/v1/json/{os.getenv('AUDIODB_API_KEY')}/search.php?s={request.form.get('artist_search')}"
+        url = f"https://www.theaudiodb.com/api/v1/json/{os.environ.get('AUDIODB_API_KEY')}/search.php?s={request.form.get('artist_search')}"
         response = requests.get(url)
         data = response.json()
         # if we find an artist in the db we create a return object with pertinent data
@@ -42,11 +42,11 @@ def tour_search():
     containing a list of event objects, if any.
     """
     if request.method == 'POST':
-        id_url = f"https://api.songkick.com/api/3.0/search/artists.json?apikey={os.getenv('SONGKICK_API_KEY')}&query={request.form.get('artist_search')}"
+        id_url = f"https://api.songkick.com/api/3.0/search/artists.json?apikey={os.environ.get('SONGKICK_API_KEY')}&query={request.form.get('artist_search')}"
         response = requests.get(id_url)
         id_data = response.json()
         id = id_data['resultsPage']['results']['artist'][0]['id']
-        tour_url = f"https://api.songkick.com/api/3.0/artists/{id}/calendar.json?apikey={os.getenv('SONGKICK_API_KEY')}"
+        tour_url = f"https://api.songkick.com/api/3.0/artists/{id}/calendar.json?apikey={os.environ.get('SONGKICK_API_KEY')}"
         response = requests.get(tour_url)
         tour_data = response.json()
         # if we get tour data from db
