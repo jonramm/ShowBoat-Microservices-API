@@ -9,6 +9,7 @@ requests = "*"
 urllib3 = "*"
 python-dotenv = "*"
 gunicorn = "*"
+importlib-metadata = "*"
 
 [dev-packages]
 
