@@ -1,7 +1,8 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, send_file
 import requests
-import pprint
+from PIL import Image
+from io import BytesIO
 
 app = Flask(__name__)
 
@@ -91,20 +92,25 @@ def video_search():
         }
         return obj
 
-@app.route("/caffeine", methods=['GET', 'POST'])
-def caffeine():
-    """
-    """
+@app.route("/image-transform", methods=['GET', 'POST'])
+def image_transform():
     if request.method == 'POST':
-        weight = request.form.get('weight')
-        caffeine = request.form.get('caffeine')
-        res = caffeine_safety(weight, caffeine)
-        obj = {"limit": res}
-        return obj
+        url, height, width = request.form['url'], int(request.form['height']), int(request.form['width'])
+        response = requests.get(url)
+        img = Image.open(BytesIO(response.content))
+
+        new_size = (width, height)
+        # new_img = img.resize(new_size)
+        img.thumbnail(new_size)
+
+        return serve_pil_image(img)
+
+def serve_pil_image(pil_img):
+    img_io = BytesIO()
+    pil_img.save(img_io, 'JPEG', quality=70)
+    img_io.seek(0)
+    return send_file(img_io, mimetype='image/jpeg')
 
 @app.route("/", methods=['GET'])
 def hello():
     return "Hello world!"
-
-def caffeine_safety(weight, caffeine):
-    pass
