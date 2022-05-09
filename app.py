@@ -94,22 +94,32 @@ def video_search():
 
 @app.route("/image-transform", methods=['GET', 'POST'])
 def image_transform():
+    """
+    Image transform endpoint that takes an image url, height, and width in the body of a
+    POST request and returns a JPEG file with that image with the specified dimensions. 
+    Image is transformed into a thumbnail version of itself which preserves the aspect
+    ratio.
+    """
     if request.method == 'POST':
         url, height, width = request.form['url'], int(request.form['height']), int(request.form['width'])
         response = requests.get(url)
         img = Image.open(BytesIO(response.content))
-
         new_size = (width, height)
-        # new_img = img.resize(new_size)
         img.thumbnail(new_size)
 
         return serve_pil_image(img)
 
 def serve_pil_image(pil_img):
+    """
+    Creates and returns a JPEG image from a Python Pillow Image Object.
+    https://stackoverflow.com/questions/7877282/how-to-send-image-generated-by-pil-to-browser
+    """
     img_io = BytesIO()
     pil_img.save(img_io, 'JPEG', quality=70)
     img_io.seek(0)
     return send_file(img_io, mimetype='image/jpeg')
+
+
 
 @app.route("/", methods=['GET'])
 def hello():
