@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, render_template
 import requests
 from PIL import Image
 from io import BytesIO
@@ -119,6 +119,22 @@ def serve_pil_image(pil_img):
     img_io.seek(0)
     return send_file(img_io, mimetype='image/jpeg')
 
+@app.route("/report-generator", methods=['GET', 'POST'])
+def report_generator():
+    """
+    """
+    if request.method == 'POST':
+        reports = request.form['reports']
+
+
+    if request.method == 'GET':
+        headings = ("Name", "Role", "Salary")
+        data = (
+            ("Jon", "Janitor", "30,000"),
+            ("Bill", "Cook", "40,000"),
+            ("Fred", "Pilot", "50,000")
+        )
+        return render_template('table.html', headings=headings, data=data)
 
 
 @app.route("/", methods=['GET'])
