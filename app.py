@@ -3,6 +3,7 @@ from flask import Flask, request, send_file, render_template
 import requests
 from PIL import Image
 from io import BytesIO
+import json
 
 app = Flask(__name__)
 
@@ -106,7 +107,6 @@ def image_transform():
         img = Image.open(BytesIO(response.content))
         new_size = (width, height)
         img.thumbnail(new_size)
-
         return serve_pil_image(img)
 
 def serve_pil_image(pil_img):
@@ -124,8 +124,11 @@ def report_generator():
     """
     """
     if request.method == 'POST':
-        reports = request.form['reports']
-
+        headings = ("Simulation #", "User's Cards", "Opponent's Cards", "Community Cards", "# of Trials", "Win %", "Loss %", "Tie %")
+        reports = request.json
+        data = [row for row in reports]
+        print(data)
+        return render_template('table.html', headings=headings, data=data)
 
     if request.method == 'GET':
         headings = ("Name", "Role", "Salary")
