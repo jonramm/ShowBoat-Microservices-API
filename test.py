@@ -8,29 +8,29 @@ import json
 
 reports = [
     {"sim_number": "1",
+    "user_cards": ["1", "2", "3"],
+    "opponent_cards": [["1", "2"], ["3", "4"]],
+   "community_cards": "1", 
    "num_trials": "10000",
    "num_opponents": "2",
-   "user_cards": "1",
-   "opponent_cards": "1",
-   "community_cards": "1", 
    "win_pct": "70.5",
    "loss_pct": "25.5",
    "tie_pct": "4.0"},
 
-   {"sim_number": "2",
+    {"sim_number": "2",
+    "user_cards": ["4", "5", "6"],
+    "opponent_cards": [["1", "2"], ["3", "4"]],
+   "community_cards": ["1", "2", "3"], 
    "num_trials": "10000",
    "num_opponents": "2",
-   "user_cards": "1",
-   "opponent_cards": "1",
-   "community_cards": "1", 
    "win_pct": "70.5",
    "loss_pct": "25.5",
    "tie_pct": "4.0"}
 ]
 
 headers={"Content-Type": "application/json"}
-res = requests.post("http://127.0.0.1:5000/report-generator", json=reports, headers=headers)
-print(res)
+res = requests.post("https://showboat-rest-api.herokuapp.com/report-generator", json=reports, headers=headers)
+print(res.text)
 
 # url = "https://showboat-rest-api.herokuapp.com/image-transform"
 

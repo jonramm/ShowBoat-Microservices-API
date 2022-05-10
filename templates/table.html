@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Reports Table</title>
 </head>
 <body>
@@ -18,8 +19,19 @@
         <tbody>
             {% for row in data %}
             <tr>
-                {% for cell in row.values() %}
-                <td>{{ cell }}</td>
+                {% for cell in row %}
+                <td>
+                    {% if row[cell] is iterable and (row[cell] is not string) %}
+                        {% for value in row[cell] %}
+                        {{ value}}
+                        {% if cell == 'opponent_cards' %}
+                            <br/>
+                        {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {{ row[cell] }}
+                    {% endif %}
+                </td>
                 {% endfor %}
             </tr>
             {% endfor %}

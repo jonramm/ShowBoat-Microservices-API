@@ -127,17 +127,8 @@ def report_generator():
         headings = ("Simulation #", "User's Cards", "Opponent's Cards", "Community Cards", "# of Trials", "Win %", "Loss %", "Tie %")
         reports = request.json
         data = [row for row in reports]
-        print(data)
         return render_template('table.html', headings=headings, data=data)
 
-    if request.method == 'GET':
-        headings = ("Name", "Role", "Salary")
-        data = (
-            ("Jon", "Janitor", "30,000"),
-            ("Bill", "Cook", "40,000"),
-            ("Fred", "Pilot", "50,000")
-        )
-        return render_template('table.html', headings=headings, data=data)
 
 
 @app.route("/", methods=['GET'])
