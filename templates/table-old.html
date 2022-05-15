@@ -19,20 +19,20 @@
         <tbody>
             {% for row in data %}
             <tr>
-                <td>{{ row["sim_number"] }}</td>
-                <td>{{ row["user_cards"] }}</td>
+                {% for cell in row %}
                 <td>
-                    {% for value in row["opponent_cards"] %}
-                        {{ value }}
-                        <br/>
-                    {% endfor %}
+                    {% if row[cell] is iterable and (row[cell] is not string) %}
+                        {% for value in row[cell] %}
+                        {{ value}}
+                        {% if cell == 'opponent_cards' %}
+                            <br/>
+                        {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {{ row[cell] }}
+                    {% endif %}
                 </td>
-                <td>{{ row["community_cards"] }}</td>
-                <td>{{ row["num_trials"] }}</td>
-                <td>{{ row["num_opponents"] }}</td>
-                <td>{{ row["win_pct"] }}</td>
-                <td>{{ row["loss_pct"] }}</td>
-                <td>{{ row["tie_pct"] }}</td>
+                {% endfor %}
             </tr>
             {% endfor %}
         </tbody>
