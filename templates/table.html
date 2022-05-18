@@ -20,14 +20,22 @@
             {% for row in data %}
             <tr>
                 <td>{{ row["sim_number"] }}</td>
-                <td>{{ row["user_cards"] }}</td>
+                <td>
+                    <img src="CARDS/{{ row['user_cards'][0] }}.png" width="48" height="68">
+                    <img src="CARDS/{{ row['user_cards'][1] }}.png" width="48" height="68">
+                </td>
                 <td>
                     {% for value in row["opponent_cards"] %}
-                        {{ value }}
+                        <img src="CARDS/{{ value[0] }}.png" width="48" height="68">
+                        <img src="CARDS/{{ value[1] }}.png" width="48" height="68">
                         <br/>
                     {% endfor %}
                 </td>
-                <td>{{ row["community_cards"] }}</td>
+                <td>
+                    {% for value in row["community_cards"] %}
+                        <img src="CARDS/{{ value }}.png" width="48" height="68">
+                    {% endfor %}
+                </td>
                 <td>{{ row["num_trials"] }}</td>
                 <td>{{ row["win_pct"] }}</td>
                 <td>{{ row["loss_pct"] }}</td>
