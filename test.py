@@ -2,27 +2,25 @@ from email import header
 import requests
 import json
 
-# sample = {"name": "Santana"}
+# sample = {"name": "Kendrick Lamar", "type": "popular"}
 # res = requests.post("https://youtube-scraper-microservice.herokuapp.com/videos", json=sample)
 # print(res.json())
 
 reports = [
     {"sim_number": "1",
     "num_trials": "10000",
-    "num_opponents": "2",
-    "user_cards": ["1", "2", "3"],
-    "opponent_cards": [["1", "2"], ["3", "4"]],
-   "community_cards": "1", 
+    "user_cards": [12, 52],
+    "opponent_cards": [[38, 52], [52, 52], [11, 0]],
+   "community_cards": [25, 52, 52, 52, 52], 
    "win_pct": "70.5",
    "loss_pct": "25.5",
    "tie_pct": "4.0"},
 
     {"sim_number": "2",
-    "user_cards": ["4", "5", "6"],
-    "opponent_cards": [["1", "2"], ["3", "4"]],
-   "community_cards": ["1", "2", "3"], 
+    "user_cards": [51, 52],
+    "opponent_cards": [[38, 52], [11, 0]],
+   "community_cards": [25, 52, 52, 52, 52], 
    "num_trials": "10000",
-   "num_opponents": "2",
    "win_pct": "70.5",
    "loss_pct": "25.5",
    "tie_pct": "4.0"}
@@ -42,3 +40,6 @@ print(res.text)
 # response = requests.post(url, data=payload)
 
 # print(response)
+
+# res = requests.get("https://mstagg.pythonanywhere.com/2022-06-22/")
+# print(res)
