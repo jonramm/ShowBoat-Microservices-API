@@ -7,6 +7,13 @@ import json
 
 app = Flask(__name__)
 
+
+#######################################################################################
+#                                                                                     #
+# My microservices                                                                    #
+#                                                                                     #
+#######################################################################################
+
 @app.route("/artist-search", methods=['GET', 'POST'])
 def artist_search():
     """
@@ -93,6 +100,12 @@ def video_search():
         }
         return obj
 
+#######################################################################################
+#                                                                                     #
+# Microservices for teammates                                                         #
+#                                                                                     #
+#######################################################################################
+
 @app.route("/image-transform", methods=['GET', 'POST'])
 def image_transform():
     """
@@ -122,6 +135,8 @@ def serve_pil_image(pil_img):
 @app.route("/report-generator", methods=['GET', 'POST'])
 def report_generator():
     """
+    Takes a reports JSON object and creates a Jinja2 HTML table template. Returns HTML
+    string to client.
     """
     if request.method == 'POST':
         headings = ("Simulation #", "User's Cards", "Opponent's Cards", "Community Cards", "# of Trials", "Win %", "Loss %", "Tie %")
