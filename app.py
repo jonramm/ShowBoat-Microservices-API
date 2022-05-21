@@ -135,8 +135,8 @@ def serve_pil_image(pil_img):
 @app.route("/report-generator", methods=['GET', 'POST'])
 def report_generator():
     """
-    Takes a reports JSON object and creates a Jinja2 HTML table template. Returns HTML
-    string to client.
+    Takes a reports JSON object and creates a Jinja2 HTML table template using ./templates/table.html.
+    Returns HTML string to client.
     """
     if request.method == 'POST':
         headings = ("Simulation #", "User's Cards", "Opponent's Cards", "Community Cards", "# of Trials", "Win %", "Loss %", "Tie %")
