@@ -156,7 +156,8 @@ def city_search():
         return None
     lat = data.json()['results'][0]['geometry']['location']['lat']
     lng = data.json()['results'][0]['geometry']['location']['lng']
-    return (lat, lng)
+    obj = {'coords': (lat, lng)}
+    return obj
 
 @app.route("/", methods=['GET'])
 def hello():
