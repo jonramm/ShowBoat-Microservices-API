@@ -133,7 +133,27 @@ def report_generator():
     Takes a reports JSON object and creates a Jinja2 HTML table template using ./templates/table.html.
     Returns HTML string to client.
     """
-    headings = ("Simulation #", "User's Cards", "Opponent's Cards", "Community Cards", "# of Trials", "Win %", "Loss %", "Tie %")
-    reports = request.json
-    data = [row for row in reports]
-    return render_template('table.html', headings=headings, data=data)
+    if request.method == 'POST':
+        headings = ("Simulation #", "User's Cards", "Opponent's Cards", "Community Cards", "# of Trials", "Win %", "Loss %", "Tie %")
+        reports = request.json
+        data = [row for row in reports]
+        return render_template('table.html', headings=headings, data=data)
+
+@app.route("city-search", methods=['POST'])
+def city_search():
+    """
+    City search endpoint that takes a search string in the body of a POST request and calls
+    the Google geolocation API. Returns latitude and longitude as a tuple if the city is found
+    and None if not.
+    """
+    data = requests.get(f"https://maps.googleapis.com/maps/api/geocode/json?address={request.form['city']}&key={os.environ.get('GOOGLE_API_KEY')}")
+    if not data.json()['results']:
+        return None
+    lat = data.json()['results'][0]['geometry']['location']['lat']
+    lng = data.json()['results'][0]['geometry']['location']['lng']
+    obj = {'coords': (lat, lng)}
+    return obj
+
+@app.route("/", methods=['GET'])
+def hello():
+    return "Hello world!"
