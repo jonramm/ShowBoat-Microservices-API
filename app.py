@@ -133,11 +133,10 @@ def report_generator():
     Takes a reports JSON object and creates a Jinja2 HTML table template using ./templates/table.html.
     Returns HTML string to client.
     """
-    if request.method == 'POST':
-        headings = ("Simulation #", "User's Cards", "Opponent's Cards", "Community Cards", "# of Trials", "Win %", "Loss %", "Tie %")
-        reports = request.json
-        data = [row for row in reports]
-        return render_template('table.html', headings=headings, data=data)
+    headings = ("Simulation #", "User's Cards", "Opponent's Cards", "Community Cards", "# of Trials", "Win %", "Loss %", "Tie %")
+    reports = request.json
+    data = [row for row in reports]
+    return render_template('table.html', headings=headings, data=data)
 
 @app.route("city-search", methods=['POST'])
 def city_search():
@@ -153,7 +152,3 @@ def city_search():
     lng = data.json()['results'][0]['geometry']['location']['lng']
     obj = {'coords': (lat, lng)}
     return obj
-
-@app.route("/", methods=['GET'])
-def hello():
-    return "Hello world!"
